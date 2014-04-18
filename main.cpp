@@ -3,7 +3,7 @@
 int main()
 {
     // Create the main window
-    sf::RenderWindow app(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
 
     // Load a sprite to display
     sf::Texture texture;
