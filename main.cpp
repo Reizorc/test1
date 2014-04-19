@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#define NB_BLOCS_L 4
-#define NB_BLOCS_H 4
+#define NB_BLOCS_L 5
+#define NB_BLOCS_H 10
 
 
 void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
@@ -14,29 +14,23 @@ int main()
 {
 
 
-    sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
+    sf::RenderWindow app(sf::VideoMode(800, 600), "TILE MAP!!)");
 
     font.loadFromFile("arial.ttf");
 
     char* gamemap[NB_BLOCS_H][NB_BLOCS_L] =
-    {{'0','1','0','1'},
-    {'1','0','0','1'},
-    {'0','1','1','0'},
-    {'0','1','1','0'}};
-
-    sf::Sprite Logo;
-    sf::Texture Tex_Logo;
-    Tex_Logo.loadFromFile("res/img/RogueLike.png");
-    Logo.setTexture(Tex_Logo);
-    Logo.setPosition(250,285);
-
-    sf::Text accueil;
-    accueil.setString("Bienvenue dans");
-    accueil.setCharacterSize(35);
-    accueil.setColor(sf::Color::Red);
-    accueil.setStyle(sf::Text::Bold);
-    accueil.setFont(font);
-    accueil.setPosition(265,250);
+    {
+    {'1','1','0','1','1'},
+    {'1','0','0','0','1'},
+    {'1','0','0','0','1'},
+    {'1','0','0','0','1'},
+    {'1','1','0','1','1'},
+    {'1','0','0','0','1'},
+    {'1','0','0','0','1'},
+    {'1','0','0','0','1'},
+    {'1','0','0','0','1'},
+    {'1','1','0','1','1'}
+    };
 
 
     while (app.isOpen())
@@ -45,21 +39,37 @@ int main()
         sf::Event event;
         while (app.pollEvent(event))
         {
-
-            if (event.type == sf::Event::Closed){
+             switch (event.type) // Type de l'évènement
+        {
+            case sf::Event::Closed : // Bouton de fermeture
                 app.close();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-                    app.close();
+                break;
+
+            case sf::Event::KeyPressed : // Appui sur une touche du clavier
+            {
+                switch (event.key.code) // La touche qui a été appuyée
+                {
+                    case sf::Keyboard::Escape : // Echap
+                        app.close();
+                        break;
+
+
+
+                    default :
+                        break;
                 }
+            }
+            break;
+
+            default :
+                break;
+        }
+
         }
 
 
         app.clear();
 
-
-        app.draw(accueil);
-        app.draw(Logo);
         affiche(app, gamemap);
 
         app.display();
@@ -72,11 +82,6 @@ int main()
 
 void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
-    sf::Text text;
-    text.setCharacterSize(30);
-    text.setPosition(30, 30);
-    text.setColor(sf::Color::White);
-    text.setFont(font);
 
     sf::Sprite grass;
     sf::Texture tex_grass;
@@ -88,18 +93,18 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
     tex_stone.loadFromFile("res/img/stone.png");
     stone.setTexture(tex_stone);
 
-    for(int x = 0; x < NB_BLOCS_L; x++)
+    for(int x = 0; x < NB_BLOCS_H; x++)
     {
-        for( int y = 0; y < NB_BLOCS_H; y++)
+        for( int y = 0; y < NB_BLOCS_L; y++)
         {
             if(gamemap[x][y] == '0')
             {
-                grass.setPosition(16*(x+1), 16*(y+1));
+                grass.setPosition(64*(x+1), 64*(y+1));
                 app.draw(grass);
             }
             if(gamemap[x][y] == '1')
             {
-                stone.setPosition(16*(x+1), 16*(y+1));
+                stone.setPosition(64*(x+1), 64*(y+1));
                 app.draw(stone);
             }
 
