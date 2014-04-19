@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+void print(sf::RenderWindow& app, int gamemap[16][16], int xsize, int ysize);
+
 int main()
 {
     sf::Font font;
@@ -50,10 +52,10 @@ int main()
 
         app.clear();
 
-        //TOUS LES DRAW ICI!!!!
+
         app.draw(accueil);
         app.draw(Logo);
-
+        print(app, gamemap, 16, 16);
         app.display();
         }
 
@@ -61,15 +63,17 @@ int main()
     return EXIT_SUCCESS;
 }
 
-void print(sf::RenderWindow app, int& gamemap, int xsize, int ysize)
+void print(sf::RenderWindow& app, int gamemap[16][16], int xsize, int ysize)
 {
     sf::Text text;
     text.setCharacterSize(30);
+    text.setColor(sf::Color::White);
     for(int x = 0; x < xsize; x++)
     {
         for(int y = 0; y < ysize; y++)
         {
             if(gamemap[x][y] == 0)
+            if(gamemap[x][y] != 0)
                 text.setPosition(30*(x+1), 30*(y+1));
                 text.setString("#");
                 app.draw(text);
