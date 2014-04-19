@@ -73,6 +73,7 @@ void print(sf::RenderWindow& app, int gamemap[16][16], int xsize, int ysize)
         for(int y = 0; y < ysize; y++)
         {
             if(gamemap[x][y] == 0)
+                std::cout << "WTF MAN!" << std::endl;
             if(gamemap[x][y] != 0)
                 text.setPosition(30*(x+1), 30*(y+1));
                 text.setString("#");
