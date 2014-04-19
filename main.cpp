@@ -21,7 +21,7 @@ int main()
 
     sf::Sprite Logo;
     sf::Texture Tex_Logo;
-    Tex_Logo.loadFromFile("RogueLike.png");
+    Tex_Logo.loadFromFile("res/img/RogueLike.png");
     Logo.setTexture(Tex_Logo);
     Logo.setPosition(250,285);
 
