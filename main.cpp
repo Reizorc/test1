@@ -11,6 +11,12 @@ int main()
 
     sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
 
+    int gamemap[16][16];
+    for(int x = 0; x < 16; x++)
+        for(int y = 0; y < 16; y++)
+            gamemap[x][y] = 0;
+
+
     sf::Sprite Logo;
     sf::Texture Tex_Logo;
     Tex_Logo.loadFromFile("RogueLike.png");
@@ -53,4 +59,20 @@ int main()
 
 
     return EXIT_SUCCESS;
+}
+
+void print(sf::RenderWindow app, int& gamemap, int xsize, int ysize)
+{
+    sf::Text text;
+    text.setCharacterSize(30);
+    for(int x = 0; x < xsize; x++)
+    {
+        for(int y = 0; y < ysize; y++)
+        {
+            if(gamemap[x][y] == 0)
+                text.setPosition(30*(x+1), 30*(y+1))
+                text.setString("#")
+                app.draw(text);
+        }
+    }
 }
