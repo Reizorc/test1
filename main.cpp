@@ -39,7 +39,6 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                     app.close();
                 }
-            }
         }
 
 
@@ -50,6 +49,7 @@ int main()
         app.draw(Logo);
 
         app.display();
+        }
 
 
     return EXIT_SUCCESS;
