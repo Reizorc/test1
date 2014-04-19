@@ -48,9 +48,6 @@
 			<Add library="dxguid" />
 			<Add directory="../../SFML/lib" />
 		</Linker>
-		<Unit filename="RogueLike.bmp" />
-		<Unit filename="RogueLike.png" />
-		<Unit filename="cb.bmp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
