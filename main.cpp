@@ -15,15 +15,15 @@ int main()
     sf::Texture Tex_Logo;
     Tex_Logo.loadFromFile("RogueLike.png");
     Logo.setTexture(Tex_Logo);
-    Logo.setPosition(250,290);
+    Logo.setPosition(250,285);
 
     sf::Text accueil;
-    accueil.setString("Bienvenue dans:");
+    accueil.setString("Bienvenue dans");
     accueil.setCharacterSize(35);
     accueil.setColor(sf::Color::Red);
     accueil.setStyle(sf::Text::Bold);
     accueil.setFont(font);
-    accueil.setPosition(250,250);
+    accueil.setPosition(265,250);
 
 
     while (app.isOpen())
@@ -33,8 +33,13 @@ int main()
         while (app.pollEvent(event))
         {
 
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
                 app.close();
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+                    app.close();
+                }
+            }
         }
 
 
@@ -45,7 +50,7 @@ int main()
         app.draw(Logo);
 
         app.display();
-    }
+
 
     return EXIT_SUCCESS;
 }
