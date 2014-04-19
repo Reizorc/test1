@@ -38,7 +38,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:/Users/Crozier/SFMLPROJET/SFML/include" />
+			<Add directory="../../SFML/include" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -46,7 +46,7 @@
 			<Add library="gdi32" />
 			<Add library="winmm" />
 			<Add library="dxguid" />
-			<Add directory="C:/Users/Crozier/SFMLPROJET/SFML/lib" />
+			<Add directory="../../SFML/lib" />
 		</Linker>
 		<Unit filename="RogueLike.bmp" />
 		<Unit filename="RogueLike.png" />
