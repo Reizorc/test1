@@ -5,25 +5,24 @@
 #define NB_BLOCS_H 4
 
 
-void affiche(sf::RenderWindow& app, char** map);
+void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
+
+    sf::Font font;
+
 
 int main()
 {
-    sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
-    {
-        std::cout << "Ca ne marche pas!! SHIT!!" << std::endl;
-    }
+
 
     sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
 
-    char* map[] =
-    {
-    "0,1,0,1",
-    "1,0,0,1",
-    "0,1,1,0",
-    "0,1,1,0",
-    };
+    font.loadFromFile("arial.ttf");
+
+    char* gamemap[NB_BLOCS_H][NB_BLOCS_L] =
+    {{'0','1','0','1'},
+    {'1','0','0','1'},
+    {'0','1','1','0'},
+    {'0','1','1','0'}};
 
     sf::Sprite Logo;
     sf::Texture Tex_Logo;
@@ -61,38 +60,43 @@ int main()
 
         app.draw(accueil);
         app.draw(Logo);
-        affiche(app, map);
+        affiche(app, gamemap);
 
         app.display();
+
         }
 
 
     return EXIT_SUCCESS;
 }
 
-void affiche(sf::RenderWindow &app, char** map)
+void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
     sf::Text text;
-    text.setString("#");
     text.setCharacterSize(30);
     text.setPosition(30, 30);
     text.setColor(sf::Color::White);
+    text.setFont(font);
     for(int x = 0; x < NB_BLOCS_L; x++)
     {
         for( int y = 0; y < NB_BLOCS_H; y++)
         {
-            if(map[x][y] == 0){
-                std::cout << "map=0" << std::endl;
-            }
-            else if(map[x][y] != 0){
-                std::cout << "map!=0" << std::endl;
-
+            if(gamemap[x][y] == '0')
+            {
+                text.setString("#");
+                text.setPosition(30*(x+1), 30*(y+1));
                 app.draw(text);
+            }
+            if(gamemap[x][y] == '1')
+            {
+                text.setString("A");
+                text.setPosition(30*(x+1), 30*(y+1));
+                app.draw(text);
+            }
+
 
         }
     }
-    app.display();
-}
 }
 
 

@@ -38,6 +38,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fpermissive" />
 			<Add directory="../../SFML/include" />
 		</Compiler>
 		<Linker>
