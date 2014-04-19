@@ -77,21 +77,30 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
     text.setPosition(30, 30);
     text.setColor(sf::Color::White);
     text.setFont(font);
+
+    sf::Sprite grass;
+    sf::Texture tex_grass;
+    tex_grass.loadFromFile("res/img/grass.png");
+    grass.setTexture(tex_grass);
+
+    sf::Sprite stone;
+    sf::Texture tex_stone;
+    tex_stone.loadFromFile("res/img/stone.png");
+    stone.setTexture(tex_stone);
+
     for(int x = 0; x < NB_BLOCS_L; x++)
     {
         for( int y = 0; y < NB_BLOCS_H; y++)
         {
             if(gamemap[x][y] == '0')
             {
-                text.setString("#");
-                text.setPosition(30*(x+1), 30*(y+1));
-                app.draw(text);
+                grass.setPosition(16*(x+1), 16*(y+1));
+                app.draw(grass);
             }
             if(gamemap[x][y] == '1')
             {
-                text.setString("A");
-                text.setPosition(30*(x+1), 30*(y+1));
-                app.draw(text);
+                stone.setPosition(16*(x+1), 16*(y+1));
+                app.draw(stone);
             }
 
 
