@@ -73,7 +73,9 @@ int main()
 void affiche(sf::RenderWindow &app, char** map)
 {
     sf::Text text;
+    text.setString("#");
     text.setCharacterSize(30);
+    text.setPosition(30, 30);
     text.setColor(sf::Color::White);
     for(int x = 0; x < NB_BLOCS_L; x++)
     {
@@ -84,13 +86,12 @@ void affiche(sf::RenderWindow &app, char** map)
             }
             else if(map[x][y] != 0){
                 std::cout << "map!=0" << std::endl;
-                text.setPosition(30*(x+1), 30*(y+1));
-                text.setString("#");
+
                 app.draw(text);
-                app.display();
+
         }
     }
-
+    app.display();
 }
 }
 
