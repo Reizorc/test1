@@ -1,7 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-void print(sf::RenderWindow& app, int gamemap[16][16], int xsize, int ysize);
+#define NB_BLOCS_L 4
+#define NB_BLOCS_H 4
+
+
+void affiche(sf::RenderWindow& app, char** map);
 
 int main()
 {
@@ -13,11 +17,13 @@ int main()
 
     sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
 
-    int gamemap[16][16];
-    for(int x = 0; x < 16; x++)
-        for(int y = 0; y < 16; y++)
-            gamemap[x][y] = 0;
-
+    char* map[] =
+    {
+    "0,1,0,1",
+    "1,0,0,1",
+    "0,1,1,0",
+    "0,1,1,0",
+    };
 
     sf::Sprite Logo;
     sf::Texture Tex_Logo;
@@ -55,7 +61,8 @@ int main()
 
         app.draw(accueil);
         app.draw(Logo);
-        print(app, gamemap, 16, 16);
+        affiche(app, map);
+
         app.display();
         }
 
@@ -63,21 +70,28 @@ int main()
     return EXIT_SUCCESS;
 }
 
-void print(sf::RenderWindow& app, int gamemap[16][16], int xsize, int ysize)
+void affiche(sf::RenderWindow &app, char** map)
 {
     sf::Text text;
     text.setCharacterSize(30);
     text.setColor(sf::Color::White);
-    for(int x = 0; x < xsize; x++)
+    for(int x = 0; x < NB_BLOCS_L; x++)
     {
-        for(int y = 0; y < ysize; y++)
+        for( int y = 0; y < NB_BLOCS_H; y++)
         {
-            if(gamemap[x][y] == 0)
-                std::cout << "WTF MAN!" << std::endl;
-            if(gamemap[x][y] != 0)
+            if(map[x][y] == 0){
+                std::cout << "map=0" << std::endl;
+            }
+            else if(map[x][y] != 0){
+                std::cout << "map!=0" << std::endl;
                 text.setPosition(30*(x+1), 30*(y+1));
                 text.setString("#");
                 app.draw(text);
+                app.display();
         }
     }
+
 }
+}
+
+
