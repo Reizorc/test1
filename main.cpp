@@ -1,35 +1,49 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main()
 {
-    // Create the main window
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf"))
+    {
+        std::cout << "Ca ne marche pas!! SHIT!!" << std::endl;
+    }
+
     sf::RenderWindow app(sf::VideoMode(800, 600), "Dis moi si tu vois ca écrit ;)");
 
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile("cb.bmp"))
-        return EXIT_FAILURE;
-    sf::Sprite sprite(texture);
+    sf::Sprite Logo;
+    sf::Texture Tex_Logo;
+    Tex_Logo.loadFromFile("RogueLike.png");
+    Logo.setTexture(Tex_Logo);
+    Logo.setPosition(250,290);
 
-	// Start the game loop
+    sf::Text accueil;
+    accueil.setString("Bienvenue dans:");
+    accueil.setCharacterSize(35);
+    accueil.setColor(sf::Color::Red);
+    accueil.setStyle(sf::Text::Bold);
+    accueil.setFont(font);
+    accueil.setPosition(250,250);
+
+
     while (app.isOpen())
     {
-        // Process events
+
         sf::Event event;
         while (app.pollEvent(event))
         {
-            // Close window : exit
+
             if (event.type == sf::Event::Closed)
                 app.close();
         }
 
-        // Clear screen
+
         app.clear();
 
-        // Draw the sprite
-        app.draw(sprite);
+        //TOUS LES DRAW ICI!!!!
+        app.draw(accueil);
+        app.draw(Logo);
 
-        // Update the window
         app.display();
     }
 
