@@ -70,8 +70,8 @@ void print(sf::RenderWindow app, int& gamemap, int xsize, int ysize)
         for(int y = 0; y < ysize; y++)
         {
             if(gamemap[x][y] == 0)
-                text.setPosition(30*(x+1), 30*(y+1))
-                text.setString("#")
+                text.setPosition(30*(x+1), 30*(y+1));
+                text.setString("#");
                 app.draw(text);
         }
     }
