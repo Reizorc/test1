@@ -18,9 +18,16 @@ int main()
 
     font.loadFromFile("arial.ttf");
 
+
+    sf::Sprite perso;
+    sf::Texture tex_perso;
+    tex_perso.loadFromFile("res/img/perso.png");
+    perso.setTexture(tex_perso);
+    perso.setPosition(0,0);
+
     char* gamemap[NB_BLOCS_H][NB_BLOCS_L] =
     {
-    {'1','1','0','1','1','1','1','1'},
+    {'1','1','1','1','1','1','1','1'},
     {'1','0','0','0','0','0','0','1'},
     {'1','0','0','0','0','0','0','1'},
     {'1','0','0','0','0','0','0','1'},
@@ -55,15 +62,19 @@ int main()
                         break;
 
                     case sf::Keyboard::Left :
+                        perso.move(-64,0);
                         break;
 
                     case sf::Keyboard::Right :
+                        perso.move(64,0);
                         break;
 
                     case sf::Keyboard::Up :
+                        perso.move(0,-64);
                         break;
 
                     case sf::Keyboard::Down :
+                        perso.move(0,64);
                         break;
 
 
@@ -83,6 +94,7 @@ int main()
 
         app.clear();
 
+        app.draw(perso);
         affiche(app, gamemap);
 
         app.display();
@@ -95,7 +107,6 @@ int main()
 
 void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
-
     sf::Sprite grass;
     sf::Texture tex_grass;
     tex_grass.loadFromFile("res/img/grass.png");
