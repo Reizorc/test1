@@ -49,6 +49,8 @@ int main()
     {
         int posX = perso.getPosition().x;
         int posY = perso.getPosition().y;
+        int posXstone = stone.getPosition().x;
+        int posYstone = stone.getPosition().y;
 
         sf::Event event;
         while (app.pollEvent(event))
@@ -69,7 +71,7 @@ int main()
 
                     case sf::Keyboard::Left :
                         if(posX >= NB_BLOCS_H/64 +64){
-                        perso.move(-64,0);
+                            perso.move(-64,0);
                         }
                         break;
 
