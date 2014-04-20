@@ -16,6 +16,7 @@ void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 struct Title
 {
     sf::Vector2i x, y;
+    sf::Vector2i realx, realy;
 
 };
 
