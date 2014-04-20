@@ -79,7 +79,7 @@ int main()
                     case sf::Keyboard::Left :
                         if(posX >= NB_BLOCS_H/64 +64){
                             if(posY != posYstone){
-                            perso.move(-64,0);
+                                perso.move(-64,0);
                             }
                             else if(posX >= posXstone + 65 || posX < posXstone){
                                 perso.move(-64,0);
@@ -89,17 +89,31 @@ int main()
 
                     case sf::Keyboard::Right :
                         if(posX <= NB_BLOCS_L*64 +64)
-                            perso.move(64,0);
+                            if(posY != posYstone){
+                                perso.move(64,0);
+                            }
+                            else if(posX <= posXstone -65 || posX > posXstone){
+                                perso.move(64,0);
+                            }
                         break;
 
                     case sf::Keyboard::Up :
                         if(posY >= NB_BLOCS_H/64 +64)
-                            perso.move(0,-64);
+                            if(posX != posXstone){
+                                perso.move(0,-64);
+                            }else if(posY >= posYstone +65 || posY < posYstone){
+                                perso.move(0,-64);
+                            }
                         break;
 
                     case sf::Keyboard::Down :
                         if(posY < NB_BLOCS_L*64 -64)
-                            perso.move(0,64);
+                            if(posX != posXstone){
+                                perso.move(0,64);
+                            }
+                            else if(posY <= posYstone -65 || posY > posYstone){
+                                perso.move(0,64);
+                            }
                         break;
 
 
@@ -130,9 +144,6 @@ int main()
 
 void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
-
-
-
 
     sf::Texture tex_grass;
     tex_grass.loadFromFile("res/img/grass.png");
