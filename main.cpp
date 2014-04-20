@@ -13,6 +13,12 @@ void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
     sf::Sprite perso;
     sf::Texture tex_perso;
 
+struct Title
+{
+    sf::Vector2i x, y;
+
+};
+
 
 int main()
 {
