@@ -144,7 +144,6 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
                 app.draw(stone);
             }
 
-
         }
     }
     app.draw(perso);
