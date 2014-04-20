@@ -1,13 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#define NB_BLOCS_L 8
-#define NB_BLOCS_H 11
+#define NB_BLOCS_L 9
+#define NB_BLOCS_H 12
 
 
 void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 
     sf::Font font;
+    sf::Sprite grass;
+    sf::Sprite stone;
     sf::Sprite perso;
     sf::Texture tex_perso;
 
@@ -16,7 +18,7 @@ int main()
 {
 
 
-    sf::RenderWindow app(sf::VideoMode(800, 600), "TILE MAP!!)");
+    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_H*64, NB_BLOCS_L*64), "TILE MAP!!)");
 
     font.loadFromFile("arial.ttf");
 
@@ -28,22 +30,25 @@ int main()
 
     char* gamemap[NB_BLOCS_H][NB_BLOCS_L] =
     {
-    {'1','1','1','1','1','1','1','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','0','0','0','0','0','0','1'},
-    {'1','1','0','1','1','1','1','1'}
+    {'1','1','1','1','1','1','1','1','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','0','0','0','0','0','0','0','1'},
+    {'1','1','1','1','1','1','1','1','1'}
     };
 
 
     while (app.isOpen())
     {
+        int posX = perso.getPosition().x;
+        int posY = perso.getPosition().y;
 
         sf::Event event;
         while (app.pollEvent(event))
@@ -63,20 +68,24 @@ int main()
                         break;
 
                     case sf::Keyboard::Left :
+                        if(posX >= NB_BLOCS_H/64 +64){
                         perso.move(-64,0);
-
+                        }
                         break;
 
                     case sf::Keyboard::Right :
-                        perso.move(64,0);
+                        if(posX <= NB_BLOCS_L*64 +64)
+                            perso.move(64,0);
                         break;
 
                     case sf::Keyboard::Up :
-                        perso.move(0,-64);
+                        if(posY >= NB_BLOCS_H/64 +64)
+                            perso.move(0,-64);
                         break;
 
                     case sf::Keyboard::Down :
-                        perso.move(0,64);
+                        if(posY < NB_BLOCS_L*64 -64)
+                            perso.move(0,64);
                         break;
 
 
@@ -110,12 +119,12 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 
 
 
-    sf::Sprite grass;
+
     sf::Texture tex_grass;
     tex_grass.loadFromFile("res/img/grass.png");
     grass.setTexture(tex_grass);
 
-    sf::Sprite stone;
+
     sf::Texture tex_stone;
     tex_stone.loadFromFile("res/img/stone.png");
     stone.setTexture(tex_stone);
@@ -126,12 +135,12 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
         {
             if(gamemap[x][y] == '0')
             {
-                grass.setPosition(64*(x+1), 64*(y+1));
+                grass.setPosition(64*(x+1)-64, 64*(y+1)-64);
                 app.draw(grass);
             }
             if(gamemap[x][y] == '1')
             {
-                stone.setPosition(64*(x+1), 64*(y+1));
+                stone.setPosition(64*(x+1)-64, 64*(y+1)-64);
                 app.draw(stone);
             }
 
