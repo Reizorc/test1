@@ -8,6 +8,8 @@
 void affiche(sf::RenderWindow& app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 
     sf::Font font;
+    sf::Sprite perso;
+    sf::Texture tex_perso;
 
 
 int main()
@@ -18,12 +20,11 @@ int main()
 
     font.loadFromFile("arial.ttf");
 
-
-    sf::Sprite perso;
-    sf::Texture tex_perso;
     tex_perso.loadFromFile("res/img/perso.png");
     perso.setTexture(tex_perso);
     perso.setPosition(0,0);
+
+
 
     char* gamemap[NB_BLOCS_H][NB_BLOCS_L] =
     {
@@ -63,6 +64,7 @@ int main()
 
                     case sf::Keyboard::Left :
                         perso.move(-64,0);
+
                         break;
 
                     case sf::Keyboard::Right :
@@ -93,8 +95,6 @@ int main()
 
 
         app.clear();
-
-        app.draw(perso);
         affiche(app, gamemap);
 
         app.display();
@@ -107,6 +107,9 @@ int main()
 
 void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
+
+
+
     sf::Sprite grass;
     sf::Texture tex_grass;
     tex_grass.loadFromFile("res/img/grass.png");
@@ -135,6 +138,7 @@ void affiche(sf::RenderWindow &app, char* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 
         }
     }
+    app.draw(perso);
 }
 
 
