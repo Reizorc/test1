@@ -336,9 +336,11 @@
 	<string>
 	<vector>
 
-1398027020 source:c:\users\crozier\sfmlprojet\projet1-test\test1\main.cpp
+1398098261 source:c:\users\crozier\sfmlprojet\projet1-test\test1\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
+	<stdlib.h>
+	<time.h>
 
 1367975678 c:\users\crozier\sfmlprojet\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
