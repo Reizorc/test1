@@ -2,7 +2,7 @@
 ## Eclipse
 #################
 
-*.layout
+test1.layout
 
 *.pydevproject
 .project
