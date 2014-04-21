@@ -39,6 +39,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fpermissive" />
+			<Add option="-DSFML_STATIC" />
 			<Add directory="../../SFML/include" />
 		</Compiler>
 		<Linker>
