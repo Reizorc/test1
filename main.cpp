@@ -18,11 +18,14 @@ struct Title
     sf::Vector2i realPos;
     int cantWalk;
     int ID;
+    int visible;
+    int opaque;
 
 };
 
 void affiche(sf::RenderWindow& app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
+void Fov(int x1, int y1, int const x2, int const y2);
 
 int main()
 {
@@ -65,9 +68,14 @@ int main()
             title->ID = gametitle[x][y]; //rand() % 2 + 0; // rand() % max + min
             title->pos = sf::Vector2i(x, y);
             if(title->ID == 1)
+            {
                 title->cantWalk = 1;
+                title->opaque = 1;
+            }
             else
+            {
                 title->cantWalk = 0;
+            }
         }
     }
 
@@ -170,20 +178,79 @@ void affiche(sf::RenderWindow &app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
         for( int y = 0; y < NB_BLOCS_L; y++)
         {
             Title* title = gamemap[x][y];
-            if(title->ID == 0)
+            if(title->visible)
             {
-                grass.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                app.draw(grass);
-            }
-            if(title->ID == 1)
-            {
-                stone.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                app.draw(stone);
+                if(title->ID == 0)
+                {
+                    grass.setPosition(64*(x+1)-64, 64*(y+1)-64);
+                    app.draw(grass);
+                }
+                if(title->ID == 1)
+                {
+                    stone.setPosition(64*(x+1)-64, 64*(y+1)-64);
+                    app.draw(stone);
+                }
             }
 
         }
     }
     app.draw(perso);
+}
+
+void Fov(int x1, int y1, int const x2, int const y2)
+{
+    int delta_x(x2 - x1);
+    // if x1 == x2, then it does not matter what we set here
+    signed char const ix((delta_x > 0) - (delta_x < 0));
+    delta_x = std::abs(delta_x) << 1;
+
+    int delta_y(y2 - y1);
+    // if y1 == y2, then it does not matter what we set here
+    signed char const iy((delta_y > 0) - (delta_y < 0));
+    delta_y = std::abs(delta_y) << 1;
+
+    gamemap[x][y]->visible = 1;
+
+    if (delta_x >= delta_y)
+    {
+        // error may go below zero
+        int error(delta_y - (delta_x >> 1));
+
+        while (x1 != x2)
+        {
+            if ((error >= 0) && (error || (ix > 0)))
+            {
+                error -= delta_x;
+                y1 += iy;
+            }
+            // else do nothing
+
+            error += delta_y;
+            x1 += ix;
+
+            gamemap[x][y]->visible = 1;
+        }
+    }
+    else
+    {
+        // error may go below zero
+        int error(delta_x - (delta_y >> 1));
+
+        while (y1 != y2)
+        {
+            if ((error >= 0) && (error || (iy > 0)))
+            {
+                error -= delta_y;
+                x1 += ix;
+            }
+            // else do nothing
+
+            error += delta_x;
+            y1 += iy;
+
+            gamemap[x][y]->visible = 1;
+        }
+    }
 }
 
 
