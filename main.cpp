@@ -6,11 +6,11 @@
 #define NB_BLOCS_L 9
 #define NB_BLOCS_H 12
 
-    sf::Font font;
-    sf::Sprite grass;
-    sf::Sprite stone;
-    sf::Sprite perso;
-    sf::Texture tex_perso;
+sf::Font font;
+sf::Sprite grass;
+sf::Sprite stone;
+sf::Sprite perso;
+sf::Texture tex_perso;
 
 struct Title
 {
@@ -25,7 +25,7 @@ struct Title
 
 void affiche(sf::RenderWindow& app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
-void Fov(int x1, int y1, int const x2, int const y2);
+void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 
 int main()
 {
@@ -38,25 +38,25 @@ int main()
 
     tex_perso.loadFromFile("res/img/perso.png");
     perso.setTexture(tex_perso);
-    perso.setPosition(64*3,0);
+    perso.setPosition(64*3,64*4);
 
 
 
     Title* gamemap[NB_BLOCS_H][NB_BLOCS_L];
     int* gametitle[NB_BLOCS_H][NB_BLOCS_L]=
     {
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,1,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0}
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0}
     };
 
     for(int x = 0; x < NB_BLOCS_H; x++)
@@ -67,6 +67,7 @@ int main()
             Title* title = gamemap[x][y];
             title->ID = gametitle[x][y]; //rand() % 2 + 0; // rand() % max + min
             title->pos = sf::Vector2i(x, y);
+            title->visible = 0;
             if(title->ID == 1)
             {
                 title->cantWalk = 1;
@@ -75,6 +76,7 @@ int main()
             else
             {
                 title->cantWalk = 0;
+                title->opaque = 0;
             }
         }
     }
@@ -90,8 +92,8 @@ int main()
         sf::Event event;
         while (app.pollEvent(event))
         {
-             switch (event.type) // Type de l'évènement
-        {
+            switch (event.type) // Type de l'évènement
+            {
             case sf::Event::Closed : // Bouton de fermeture
                 app.close();
                 break;
@@ -100,49 +102,69 @@ int main()
             {
                 switch (event.key.code) // La touche qui a été appuyée
                 {
-                    case sf::Keyboard::Escape : // Echap
-                        app.close();
-                        break;
+                case sf::Keyboard::Escape : // Echap
+                    app.close();
+                    break;
 
-                    case sf::Keyboard::Left :
-                        if(posX >= NB_BLOCS_H/64 +64)
-                        {
-                            if(!gamemap[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk)
-                                perso.move(-64,0);
-                        }
-                        break;
+                case sf::Keyboard::Left :
+                    if(posX >= NB_BLOCS_H/64 +64)
+                    {
+                        if(!gamemap[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk)
+                            perso.move(-64,0);
+                    }
+                    break;
 
-                    case sf::Keyboard::Right :
-                        if(posX <= NB_BLOCS_L*64 +64)
-                            if(!gamemap[getPersoTitle(perso).x+1][getPersoTitle(perso).y]->cantWalk)
-                                perso.move(64,0);
-                        break;
+                case sf::Keyboard::Right :
+                    if(posX <= NB_BLOCS_L*64 +64)
+                        if(!gamemap[getPersoTitle(perso).x+1][getPersoTitle(perso).y]->cantWalk)
+                            perso.move(64,0);
+                    break;
 
-                    case sf::Keyboard::Up :
-                        if(posY >= NB_BLOCS_H/64 +64)
-                            if(!gamemap[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk)
-                                perso.move(0,-64);
-                        break;
+                case sf::Keyboard::Up :
+                    if(posY >= NB_BLOCS_H/64 +64)
+                        if(!gamemap[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk)
+                            perso.move(0,-64);
+                    break;
 
-                    case sf::Keyboard::Down :
-                        if(posY < NB_BLOCS_L*64 -64)
-                            if(!gamemap[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk)
-                                perso.move(0,64);
-                        break;
-
-
-
-                    default :
-                        break;
+                case sf::Keyboard::Down :
+                    if(posY < NB_BLOCS_L*64 -64)
+                        if(!gamemap[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk)
+                            perso.move(0,64);
+                    break;
+                default :
+                    break;
                 }
             }
             break;
 
             default :
                 break;
-        }
+            }
 
         }
+
+            for(int x = 0; x < NB_BLOCS_H; x++)
+    {
+        for(int y = 0; y < NB_BLOCS_L; y++)
+        {
+            gamemap[x][y]->visible = 0;
+        }
+    }
+
+        for(int x = 0; x < NB_BLOCS_L; x++)
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, gamemap);
+        for(int x = 0; x < NB_BLOCS_L; x++)
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, gamemap);
+        for(int x = 0; x < NB_BLOCS_H; x++)
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, gamemap);
+        for(int x = 0; x < NB_BLOCS_H; x++)
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, gamemap);
+
+//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 9, 9, gamemap);
+//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 1, gamemap);
+//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 2, gamemap);
+//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 3, gamemap);
+//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 4, gamemap);
 
 
         app.clear();
@@ -150,7 +172,7 @@ int main()
 
         app.display();
 
-        }
+    }
 
 
     return EXIT_SUCCESS;
@@ -197,8 +219,9 @@ void affiche(sf::RenderWindow &app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
     app.draw(perso);
 }
 
-void Fov(int x1, int y1, int const x2, int const y2)
+void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
+
     int delta_x(x2 - x1);
     // if x1 == x2, then it does not matter what we set here
     signed char const ix((delta_x > 0) - (delta_x < 0));
@@ -209,7 +232,7 @@ void Fov(int x1, int y1, int const x2, int const y2)
     signed char const iy((delta_y > 0) - (delta_y < 0));
     delta_y = std::abs(delta_y) << 1;
 
-    gamemap[x][y]->visible = 1;
+    gamemap[x1][y1]->visible = 1;
 
     if (delta_x >= delta_y)
     {
@@ -228,7 +251,9 @@ void Fov(int x1, int y1, int const x2, int const y2)
             error += delta_y;
             x1 += ix;
 
-            gamemap[x][y]->visible = 1;
+            gamemap[x1][y1]->visible = 1;
+            if(gamemap[x1][y1]->opaque)
+                return;
         }
     }
     else
@@ -248,7 +273,9 @@ void Fov(int x1, int y1, int const x2, int const y2)
             error += delta_x;
             y1 += iy;
 
-            gamemap[x][y]->visible = 1;
+            gamemap[x1][y1]->visible = 1;
+            if(gamemap[x1][y1]->opaque)
+                return;
         }
     }
 }
