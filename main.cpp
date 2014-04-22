@@ -25,7 +25,7 @@ struct Title
 
 void affiche(sf::RenderWindow& app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
-void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
+void Fov(int x1, int y1, int const x2, int const y2, int max, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L]);
 
 int main()
 {
@@ -152,20 +152,13 @@ int main()
     }
 
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, 3, gamemap);
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, 3, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, 3, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, gamemap);
-
-//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 9, 9, gamemap);
-//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 1, gamemap);
-//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 2, gamemap);
-//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 3, gamemap);
-//        Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, 4, gamemap);
-
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, 3, gamemap);
 
         app.clear();
         affiche(app, gamemap);
@@ -219,7 +212,7 @@ void affiche(sf::RenderWindow &app, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
     app.draw(perso);
 }
 
-void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
+void Fov(int x1, int y1, int const x2, int const y2, int max, Title* gamemap[NB_BLOCS_H][NB_BLOCS_L])
 {
 
     int delta_x(x2 - x1);
@@ -234,6 +227,8 @@ void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][
 
     gamemap[x1][y1]->visible = 1;
 
+    int x = 0;
+
     if (delta_x >= delta_y)
     {
         // error may go below zero
@@ -241,6 +236,7 @@ void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][
 
         while (x1 != x2)
         {
+            x++;
             if ((error >= 0) && (error || (ix > 0)))
             {
                 error -= delta_x;
@@ -252,7 +248,7 @@ void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][
             x1 += ix;
 
             gamemap[x1][y1]->visible = 1;
-            if(gamemap[x1][y1]->opaque)
+            if(gamemap[x1][y1]->opaque || x == max)
                 return;
         }
     }
@@ -263,6 +259,7 @@ void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][
 
         while (y1 != y2)
         {
+            x++;
             if ((error >= 0) && (error || (iy > 0)))
             {
                 error -= delta_y;
@@ -274,7 +271,7 @@ void Fov(int x1, int y1, int const x2, int const y2, Title* gamemap[NB_BLOCS_H][
             y1 += iy;
 
             gamemap[x1][y1]->visible = 1;
-            if(gamemap[x1][y1]->opaque)
+            if(gamemap[x1][y1]->opaque || x == max)
                 return;
         }
     }
