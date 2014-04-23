@@ -48,8 +48,8 @@ int main()
     {
         int posX = perso.getPosition().x;
         int posY = perso.getPosition().y;
-        int posXstone = stone.getPosition().x;
-        int posYstone = stone.getPosition().y;
+
+
 
         sf::Event event;
         while (app.pollEvent(event))
