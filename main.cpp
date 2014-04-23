@@ -6,7 +6,10 @@
 #include "src/Title.h"
 
 #define NB_BLOCS_L 9
-#define NB_BLOCS_H 12
+#define NB_BLOCS_H 11
+
+#define NB_BLOCS_X 9
+#define NB_BLOCS_Y 11
 
 sf::Font font;
 sf::Sprite grass;
