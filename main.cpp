@@ -11,6 +11,8 @@
 #define NB_BLOCS_X 11
 #define NB_BLOCS_Y 9
 
+sf::View view(sf::Vector2f(NB_BLOCS_X*64/2, NB_BLOCS_Y*64/2), sf::Vector2f(NB_BLOCS_X*64, NB_BLOCS_Y*64));
+
 sf::Font font;
 sf::Sprite grass;
 sf::Sprite stone;
@@ -23,12 +25,13 @@ sf::Texture tex_perso;
 Map* gamemap;
 
 void affiche(sf::RenderWindow& app, Map* gamemap);
+void scrolling(int screenX,int screenY);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
 void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap);
 
 int main()
 {
-    sf::View view(sf::Vector2f(NB_BLOCS_X*64/2, NB_BLOCS_Y*64/2), sf::Vector2f(NB_BLOCS_X*64, NB_BLOCS_Y*64));
+
     srand (time(NULL));
     sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
 
@@ -50,6 +53,8 @@ int main()
     {
         int posX = perso.getPosition().x;
         int posY = perso.getPosition().y;
+
+        scrolling(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
 
 
         sf::Event event;
@@ -132,15 +137,6 @@ int main()
 
         app.clear();
 
-        position.x = perso.getPosition().x +10 - (NB_BLOCS_X*64 /2);
-        position.y = perso.getPosition().y +10 - (NB_BLOCS_Y*64 /2);
-
-        if(position.x<0)
-            position.x =0;
-        if(position.y<0)
-            position.y=0;
-
-        view.reset(sf::FloatRect(position.x,position.y,NB_BLOCS_X*64,NB_BLOCS_Y*64));
 
         affiche(app, gamemap);
 
@@ -259,6 +255,21 @@ void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap)
                 return;
         }
     }
+}
+void scrolling(int screenX,int screenY){
+        sf::Vector2f position(screenX,screenY);
+
+        if(perso.getPosition().x +10 > screenX)
+            position.x = perso.getPosition().x + 10;
+        else
+            position.x = screenX;
+        if(perso.getPosition().y +10 > screenY)
+            position.y = perso.getPosition().y + 10;
+        else
+            position.y = screenY;
+
+        view.setCenter(position);
+
 }
 
 
