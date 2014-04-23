@@ -28,6 +28,7 @@ void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap);
 
 int main()
 {
+    sf::View view(sf::Vector2f(NB_BLOCS_X*64/2, NB_BLOCS_Y*64/2), sf::Vector2f(NB_BLOCS_X*64, NB_BLOCS_Y*64));
     srand (time(NULL));
     sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
 
@@ -42,6 +43,8 @@ int main()
     spider.setPosition(64*5,64*6);
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
+
+    sf::Vector2f position(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
 
     while (app.isOpen())
     {
@@ -70,27 +73,33 @@ int main()
                 case sf::Keyboard::Left :
                     if(posX >= NB_BLOCS_L/64)
                     {
-                        if(!gamemap->map[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk)
+                        if(!gamemap->map[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk){
                             perso.move(-64,0);
+                        }
+
                     }
                     break;
 
                 case sf::Keyboard::Right :
                     if(posX <= NB_BLOCS_L*64 +64)
-                        if(!gamemap->map[getPersoTitle(perso).x+1][getPersoTitle(perso).y]->cantWalk)
+                        if(!gamemap->map[getPersoTitle(perso).x+1][getPersoTitle(perso).y]->cantWalk){
                             perso.move(64,0);
+                        }
                     break;
 
                 case sf::Keyboard::Up :
                     if(posY >= NB_BLOCS_H/64)
-                        if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk)
+                        if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk){
                             perso.move(0,-64);
+                        }
                     break;
 
                 case sf::Keyboard::Down :
                     if(posY < NB_BLOCS_H*64 -64)
-                        if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk)
+                        if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk){
                             perso.move(0,64);
+
+                        }
                     break;
                 default :
                     break;
@@ -122,7 +131,20 @@ int main()
             Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, 3, gamemap);
 
         app.clear();
+
+        position.x = perso.getPosition().x +10 - (NB_BLOCS_X*64 /2);
+        position.y = perso.getPosition().y +10 - (NB_BLOCS_Y*64 /2);
+
+        if(position.x<0)
+            position.x =0;
+        if(position.y<0)
+            position.y=0;
+
+        view.reset(sf::FloatRect(position.x,position.y,NB_BLOCS_X*64,NB_BLOCS_Y*64));
+
         affiche(app, gamemap);
+
+        app.setView(view);
 
         app.display();
 
