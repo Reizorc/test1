@@ -2,8 +2,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
-#include <Map.h>
-#include <Title.h>
+#include "include/Map.h"
+#include "include/Title.h"
 
 #define NB_BLOCS_L 9
 #define NB_BLOCS_H 12
