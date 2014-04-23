@@ -29,44 +29,7 @@ int main()
     perso.setTexture(tex_perso);
     perso.setPosition(64*3,64*4);
 
-    gamemap = new Map(12, 9);//l[NB_BLOCS_H][NB_BLOCS_L];
-//    int* gametitle[NB_BLOCS_H][NB_BLOCS_L]=
-//    {
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,1,0,0,0,0,0},
-//        {0,0,0,0,1,1,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0},
-//        {0,0,0,0,0,0,0,0,0}
-//    };
-//
-//    for(int x = 0; x < NB_BLOCS_H; x++)
-//    {
-//        for(int y = 0; y < NB_BLOCS_L; y++)
-//        {
-//            gamemap->map[x][y] = new Title;
-//            Title* title = gamemap->map[x][y];
-//            title->ID = gametitle[x][y]; //rand() % 2 + 0; // rand() % max + min
-//            title->pos = sf::Vector2i(x, y);
-//            title->visible = 0;
-//            if(title->ID == 1)
-//            {
-//                title->cantWalk = 1;
-//                title->opaque = 1;
-//            }
-//            else
-//            {
-//                title->cantWalk = 0;
-//                title->opaque = 0;
-//            }
-//        }
-//    }
+    gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
 
     while (app.isOpen())
