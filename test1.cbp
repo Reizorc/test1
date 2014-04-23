@@ -66,6 +66,10 @@
 			<Add directory="../../SFML/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/Map.h" />
+		<Unit filename="src/Title.cpp" />
+		<Unit filename="src/Title.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
