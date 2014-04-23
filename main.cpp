@@ -13,6 +13,7 @@ sf::Sprite grass;
 sf::Sprite stone;
 sf::Sprite perso;
 sf::Texture tex_perso;
+Map* gamemap;
 
 void affiche(sf::RenderWindow& app, Map* gamemap);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
@@ -28,7 +29,7 @@ int main()
     perso.setTexture(tex_perso);
     perso.setPosition(64*3,64*4);
 
-    Map* gamemap(12, 9);//l[NB_BLOCS_H][NB_BLOCS_L];
+    gamemap = new Map(12, 9);//l[NB_BLOCS_H][NB_BLOCS_L];
 //    int* gametitle[NB_BLOCS_H][NB_BLOCS_L]=
 //    {
 //        {0,0,0,0,0,0,0,0,0},

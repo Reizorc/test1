@@ -41,8 +41,6 @@ Map::Map(int maxH, int maxL)
         }
         map.push_back(row);
     }
-    map[0][0]->opaque = 0;
-    assert(1==0);
 }
 
 Map::~Map()
