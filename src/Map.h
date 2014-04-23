@@ -11,8 +11,11 @@ class Map
 {
     public:
         Map(int maxH, int maxL);
+        Map* getMap(int x1, int y1, int x2, int y2);
         virtual ~Map();
         vector< vector<Title*> > map;
+        int x;
+        int y;
     protected:
     private:
 };

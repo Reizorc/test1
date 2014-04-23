@@ -54,7 +54,7 @@ int main()
         int posX = perso.getPosition().x;
         int posY = perso.getPosition().y;
 
-        scrolling(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
+        //scrolling(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
 
 
         sf::Event event;
@@ -118,7 +118,7 @@ int main()
 
         }
 
-            for(int x = 0; x < NB_BLOCS_H; x++)
+    for(int x = 0; x < NB_BLOCS_H; x++)
     {
         for(int y = 0; y < NB_BLOCS_L; y++)
         {
@@ -127,20 +127,20 @@ int main()
     }
 
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, 3, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, 3, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, 3, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, 3, gamemap);
+            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, 5, gamemap);
 
         app.clear();
 
 
-        affiche(app, gamemap);
+        affiche(app, gamemap->getMap(1, 1, 10, 10));
 
-        app.setView(view);
+        //app.setView(view);
 
         app.display();
 
@@ -167,9 +167,9 @@ void affiche(sf::RenderWindow &app, Map* gamemap)
     tex_stone.loadFromFile("res/img/stone.png");
     stone.setTexture(tex_stone);
 
-    for(int x = 0; x < NB_BLOCS_H; x++)
+    for(int x = 0; x < gamemap->y; x++)
     {
-        for( int y = 0; y < NB_BLOCS_L; y++)
+        for( int y = 0; y < gamemap->x; y++)
         {
             Title* title = gamemap->map[x][y];
             if(title->visible)
