@@ -43,17 +43,16 @@ int main()
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
-
     while (app.isOpen())
     {
         int posX = perso.getPosition().x;
         int posY = perso.getPosition().y;
 
 
-
         sf::Event event;
         while (app.pollEvent(event))
         {
+
             switch (event.type) // Type de l'évènement
             {
             case sf::Event::Closed : // Bouton de fermeture
