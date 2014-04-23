@@ -5,17 +5,21 @@
 #include "src/Map.h"
 #include "src/Title.h"
 
-#define NB_BLOCS_L 9
-#define NB_BLOCS_H 11
+#define NB_BLOCS_L 100
+#define NB_BLOCS_H 100
 
-#define NB_BLOCS_X 9
-#define NB_BLOCS_Y 11
+#define NB_BLOCS_X 11
+#define NB_BLOCS_Y 9
 
 sf::Font font;
 sf::Sprite grass;
 sf::Sprite stone;
 sf::Sprite perso;
+sf::Sprite spider;
+
+sf::Texture tex_spider;
 sf::Texture tex_perso;
+
 Map* gamemap;
 
 void affiche(sf::RenderWindow& app, Map* gamemap);
@@ -25,12 +29,17 @@ void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap);
 int main()
 {
     srand (time(NULL));
-    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_H*64, NB_BLOCS_L*64), "TILE MAP!!)");
+    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
 
     font.loadFromFile("arial.ttf");
+
     tex_perso.loadFromFile("res/img/perso.png");
     perso.setTexture(tex_perso);
-    perso.setPosition(64*3,64*4);
+    perso.setPosition(0,0);
+
+    tex_spider.loadFromFile("res/img/spider.png");
+    spider.setTexture(tex_spider);
+    spider.setPosition(64*5,64*6);
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
@@ -60,7 +69,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Left :
-                    if(posX >= NB_BLOCS_H/64 +64)
+                    if(posX >= NB_BLOCS_L/64)
                     {
                         if(!gamemap->map[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk)
                             perso.move(-64,0);
@@ -74,13 +83,13 @@ int main()
                     break;
 
                 case sf::Keyboard::Up :
-                    if(posY >= NB_BLOCS_H/64 +64)
+                    if(posY >= NB_BLOCS_H/64)
                         if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk)
                             perso.move(0,-64);
                     break;
 
                 case sf::Keyboard::Down :
-                    if(posY < NB_BLOCS_L*64 -64)
+                    if(posY < NB_BLOCS_H*64 -64)
                         if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk)
                             perso.move(0,64);
                     break;
@@ -163,6 +172,7 @@ void affiche(sf::RenderWindow &app, Map* gamemap)
         }
     }
     app.draw(perso);
+    app.draw(spider);
 }
 
 void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap)
