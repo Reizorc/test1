@@ -124,7 +124,7 @@ Map::Map(int maxH, int maxL)
                 row[y]->visible = 0;
                 if(row[y]->ID == 1)
                 {
-                    row[y]->cantWalk = 0;
+                    row[y]->cantWalk = 1;
                     row[y]->opaque = 1;
                 }
                 else
