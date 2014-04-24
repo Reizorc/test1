@@ -11,6 +11,7 @@ struct Title
     int ID;
     int visible;
     int opaque;
+    int player;
 };
 
 #endif // TITLE_H_INCLUDED

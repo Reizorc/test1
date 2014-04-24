@@ -146,15 +146,15 @@ Map* Map::getMap(int x1, int y1, int x2, int y2)
     for(x1; x1 < x2; x1++)
     {
         vector<Title*> row;
+        mapToReturn->y = 0;
         for(y1; y1 < y2; y1++)
         {
             row.push_back(this->map[x1][y1]);
-            std::cout << x1 << " " << y1 << "\n";
-            mapToReturn->x++;
+            mapToReturn->y++;
         }
         y1 = y1start;
         mapToReturn->map.push_back(row);
-        mapToReturn->y++;
+        mapToReturn->x++;
     }
     return mapToReturn;
 }

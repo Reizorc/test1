@@ -24,6 +24,9 @@ sf::Texture tex_perso;
 
 Map* gamemap;
 
+int persoX;
+int persoY;
+
 void affiche(sf::RenderWindow& app, Map* gamemap);
 void scrolling(int screenX,int screenY);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
@@ -39,11 +42,14 @@ int main()
 
     tex_perso.loadFromFile("res/img/perso.png");
     perso.setTexture(tex_perso);
-    perso.setPosition(0,0);
+    perso.setPosition(64*4,64*4);
+
+    persoX = 5;
+    persoY = 5;
 
     tex_spider.loadFromFile("res/img/spider.png");
     spider.setTexture(tex_spider);
-    spider.setPosition(64*5,64*6);
+    spider.setPosition(64*6,64*6);
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
@@ -79,7 +85,8 @@ int main()
                     if(posX >= NB_BLOCS_L/64)
                     {
                         if(!gamemap->map[getPersoTitle(perso).x-1][getPersoTitle(perso).y]->cantWalk){
-                            perso.move(-64,0);
+                           // perso.move(-64,0);
+                           persoX--;
                         }
 
                     }
@@ -88,22 +95,24 @@ int main()
                 case sf::Keyboard::Right :
                     if(posX <= NB_BLOCS_L*64 +64)
                         if(!gamemap->map[getPersoTitle(perso).x+1][getPersoTitle(perso).y]->cantWalk){
-                            perso.move(64,0);
+                           // perso.move(64,0);
+                           persoX++;
                         }
                     break;
 
                 case sf::Keyboard::Up :
                     if(posY >= NB_BLOCS_H/64)
                         if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y-1]->cantWalk){
-                            perso.move(0,-64);
+                            //perso.move(0,-64);
+                            persoY--;
                         }
                     break;
 
                 case sf::Keyboard::Down :
                     if(posY < NB_BLOCS_H*64 -64)
                         if(!gamemap->map[getPersoTitle(perso).x][getPersoTitle(perso).y+1]->cantWalk){
-                            perso.move(0,64);
-
+                            //perso.move(0,64);
+                            persoY++;
                         }
                     break;
                 default :
@@ -127,18 +136,18 @@ int main()
     }
 
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, 0, x, 5, gamemap);
+            Fov(persoX, persoY, 0, x, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, NB_BLOCS_H-1, x, 5, gamemap);
+            Fov(persoX, persoY, NB_BLOCS_H-1, x, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, 0, 5, gamemap);
+            Fov(persoX, persoY, x, 0, 5, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(getPersoTitle(perso).x, getPersoTitle(perso).y, x, NB_BLOCS_L-1, 5, gamemap);
+            Fov(persoX, persoY, x, NB_BLOCS_L-1, 5, gamemap);
 
         app.clear();
 
 
-        affiche(app, gamemap->getMap(1, 1, 10, 10));
+        affiche(app, gamemap->getMap(persoX-4, persoY-4, persoX+4, persoY+4));
 
         //app.setView(view);
 
@@ -167,9 +176,9 @@ void affiche(sf::RenderWindow &app, Map* gamemap)
     tex_stone.loadFromFile("res/img/stone.png");
     stone.setTexture(tex_stone);
 
-    for(int x = 0; x < gamemap->y; x++)
+    for(int x = 0; x < gamemap->x; x++)
     {
-        for( int y = 0; y < gamemap->x; y++)
+        for( int y = 0; y < gamemap->y; y++)
         {
             Title* title = gamemap->map[x][y];
             if(title->visible)
