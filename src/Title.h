@@ -2,7 +2,9 @@
 #define TITLE_H_INCLUDED
 
 #include <SFML/Graphics.hpp>
-#include <Entity.h>
+#include "Entity.h"
+
+class Entity;
 
 struct Title
 {

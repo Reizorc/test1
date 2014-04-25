@@ -1,8 +1,10 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENTITY_H_INCLUDE
+#define ENTITY_H_INCLUDE
 
 #include "Title.h"
 #include <SFML/Graphics.hpp>
+
+struct Title;
 
 class Entity
 {
@@ -14,7 +16,7 @@ class Entity
         sf::Vector2i getPos();
     protected:
         sf::Vector2i Pos;
-        //Title* parent;
+        Title* parent;
     private:
 };
 
