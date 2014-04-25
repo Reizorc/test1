@@ -113,10 +113,10 @@ Map::Map(int maxH, int maxL)
 
     if(maxL && maxH)
     {
-        for(int x = 0; x < maxL; x++)
+        for(int x = 0; x < maxH; x++)
         {
             vector<Title*> row;
-            for(int y = 0; y < maxH; y++)
+            for(int y = 0; y < maxL; y++)
             {
                 row.push_back(new Title);
                 row[y]->ID = gametitle[x][y];
