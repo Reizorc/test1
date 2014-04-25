@@ -2,6 +2,7 @@
 #define TITLE_H_INCLUDED
 
 #include <SFML/Graphics.hpp>
+#include <Entity.h>
 
 struct Title
 {
@@ -12,6 +13,7 @@ struct Title
     int visible;
     int opaque;
     int player;
+    std::vector< Entity > entity;
 };
 
 #endif // TITLE_H_INCLUDED
