@@ -1,6 +1,6 @@
 #include "Map.h"
 #include <assert.h>
-#include "gametitle.cpp"
+#include "gametitle.h"
 
 Map::Map(int maxH, int maxL)
 {
@@ -16,7 +16,7 @@ Map::Map(int maxH, int maxL)
             for(int y = 0; y < maxL; y++)
             {
                 row.push_back(new Title);
-                row[y]->ID = gametitle[x][y];
+                row[y]->ID = tilemap();
                 row[y]->pos = sf::Vector2i(x, y);
                 row[y]->visible = 0;
                 if(row[y]->ID == 1)

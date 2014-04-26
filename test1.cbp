@@ -70,6 +70,7 @@
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/Title.cpp" />
 		<Unit filename="src/Title.h" />
+		<Unit filename="src/gametitle.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
