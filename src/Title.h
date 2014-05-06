@@ -15,6 +15,7 @@ struct Title
     int visible;
     int opaque;
     int player;
+    int discoverd;
     std::vector< Entity > entity;
 };
 

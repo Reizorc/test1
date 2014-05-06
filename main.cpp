@@ -82,7 +82,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Left :
-                    if(persoX > 4)
+                    if(persoX > 5)
                     {
                         if(!gamemap->map[persoX-1][persoY]->cantWalk){
                            // perso.move(-64,0);
@@ -131,23 +131,30 @@ int main()
     {
         for(int y = 0; y < NB_BLOCS_L; y++)
         {
-            gamemap->map[x][y]->visible = 0;
+            if(gamemap->map[x][y]->visible)
+            {
+               gamemap->map[x][y]->visible = 0;
+               gamemap->map[x][y]->discoverd = 1;
+            }
+
         }
     }
 
+        int dist = 3;
+
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(persoX, persoY, 0, x, 5, gamemap);
+            Fov(persoX, persoY, 0, x, dist, gamemap);
         for(int x = 0; x < NB_BLOCS_L; x++)
-            Fov(persoX, persoY, NB_BLOCS_H-1, x, 5, gamemap);
+            Fov(persoX, persoY, NB_BLOCS_H-1, x, dist, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(persoX, persoY, x, 0, 5, gamemap);
+            Fov(persoX, persoY, x, 0, dist, gamemap);
         for(int x = 0; x < NB_BLOCS_H; x++)
-            Fov(persoX, persoY, x, NB_BLOCS_L-1, 5, gamemap);
+            Fov(persoX, persoY, x, NB_BLOCS_L-1, dist, gamemap);
 
         app.clear();
 
 
-        affiche(app, gamemap->getMap(persoX-5, persoY-4, persoX+5, persoY+4));
+        affiche(app, gamemap->getMap(persoX-5, persoY-4, persoX+6, persoY+5));
 
         //app.setView(view);
 
@@ -181,8 +188,18 @@ void affiche(sf::RenderWindow &app, Map* gamemap)
         for( int y = 0; y < gamemap->y; y++)
         {
             Title* title = gamemap->map[x][y];
-            if(title->visible)
+            if(title->visible || title->discoverd)
             {
+                if(title->discoverd && !title->visible)
+                {
+                    grass.setColor(sf::Color(255, 255, 255, 128));
+                    stone.setColor(sf::Color(255, 255, 255, 128));
+                }
+                else
+                {
+                    grass.setColor(sf::Color(255, 255, 255, 255));
+                    stone.setColor(sf::Color(255, 255, 255, 255));
+                }
                 if(title->ID == 0)
                 {
                     grass.setPosition(64*(x+1)-64, 64*(y+1)-64);

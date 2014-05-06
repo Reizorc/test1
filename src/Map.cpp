@@ -16,9 +16,10 @@ Map::Map(int maxH, int maxL)
             for(int y = 0; y < maxL; y++)
             {
                 row.push_back(new Title);
-                row[y]->ID = tilemap(x, y);
+                row[y]->ID = tilemap(y,x);
                 row[y]->pos = sf::Vector2i(x, y);
                 row[y]->visible = 0;
+                row[y]->discoverd = 0;
                 if(row[y]->ID == 1)
                 {
                     row[y]->cantWalk = 1;
