@@ -16,7 +16,7 @@ Map::Map(int maxH, int maxL)
             for(int y = 0; y < maxL; y++)
             {
                 row.push_back(new Title);
-                row[y]->ID = tilemap();
+                row[y]->ID = tilemap(x, y);
                 row[y]->pos = sf::Vector2i(x, y);
                 row[y]->visible = 0;
                 if(row[y]->ID == 1)
@@ -40,11 +40,11 @@ Map* Map::getMap(int x1, int y1, int x2, int y2)
     Map* mapToReturn;
     mapToReturn = new Map(0, 0);
     int y1start = y1;
-    for(x1; x1 < x2; x1++)
+    for(;x1 < x2; x1++)
     {
         vector<Title*> row;
         mapToReturn->y = 0;
-        for(y1; y1 < y2; y1++)
+        for(;y1 < y2; y1++)
         {
             row.push_back(this->map[x1][y1]);
             mapToReturn->y++;

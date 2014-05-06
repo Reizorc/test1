@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="src" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
@@ -27,6 +28,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="src" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -66,11 +68,12 @@
 			<Add directory="../../SFML/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Entity.cpp" />
+		<Unit filename="src/Entity.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/Title.cpp" />
 		<Unit filename="src/Title.h" />
-		<Unit filename="src/gametitle.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
