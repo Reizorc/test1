@@ -42,10 +42,10 @@ int main()
 
     tex_perso.loadFromFile("res/img/perso.png");
     perso.setTexture(tex_perso);
-    perso.setPosition(64*4,64*4);
+    perso.setPosition(64*5,64*4);
 
-    persoX = 4;
-    persoY = 4;
+    persoX = 6;
+    persoY = 5;
 
     tex_spider.loadFromFile("res/img/spider.png");
     spider.setTexture(tex_spider);
@@ -82,7 +82,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Left :
-                    if(posX >= NB_BLOCS_L/64)
+                    if(persoX > 4)
                     {
                         if(!gamemap->map[persoX-1][persoY]->cantWalk){
                            // perso.move(-64,0);
@@ -101,7 +101,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Up :
-                    if(posY >= NB_BLOCS_H/64)
+                    if(persoY > 5)
                         if(!gamemap->map[persoX][persoY-1]->cantWalk){
                             //perso.move(0,-64);
                             persoY--;
@@ -147,7 +147,7 @@ int main()
         app.clear();
 
 
-        affiche(app, gamemap->getMap(persoX-4, persoY-4, persoX+4, persoY+4));
+        affiche(app, gamemap->getMap(persoX-5, persoY-4, persoX+5, persoY+4));
 
         //app.setView(view);
 

@@ -14,6 +14,8 @@ class Entity
 
         void setPos(sf::Vector2i pos);
         sf::Vector2i getPos();
+
+        void draw(sf::RenderWindow& app);
     protected:
         sf::Vector2i Pos;
         Title* parent;
