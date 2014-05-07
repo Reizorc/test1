@@ -42,6 +42,11 @@ void print::affiche(Map* gamemap)
                 sprite.setPosition(64*(x+1)-64, 64*(y+1)-64);
                 sprite.setTexture(getTexture(title->spriteName));
                 app->draw(sprite);
+                for(auto& Entity : title->entity)
+                {
+                    sprite.setTexture(getTexture(Entity->getSprite()));
+                    app->draw(sprite);
+                }
             }
 
         }

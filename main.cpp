@@ -17,8 +17,8 @@ sf::View view(sf::Vector2f(NB_BLOCS_X*64/2, NB_BLOCS_Y*64/2), sf::Vector2f(NB_BL
 sf::Font font;
 sf::Sprite grass;
 sf::Sprite stone;
-sf::Sprite perso;
-sf::Sprite spider;
+
+Entity* perso; // seul entity dont on garde une reference directement
 
 sf::Texture tex_spider;
 sf::Texture tex_perso;
@@ -39,6 +39,8 @@ int main()
     srand (time(NULL));
     sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
 
+    gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
+
     print aff(app);
 
     font.loadFromFile("arial.ttf");
@@ -53,20 +55,21 @@ int main()
     aff.registerSprite("stone.png");
     aff.registerSprite("grass.png");
 
-    perso.setTexture(aff.getTexture("perso"));
-    perso.setPosition(64*5,64*4);
+    perso = new Entity();
+    perso->setSprite("perso");
+    perso->setParent(gamemap->map[6][5]);
 
-    spider.setTexture(aff.getTexture("spider"));
-    spider.setPosition(64*6,64*6);
+    Entity* spider = new Entity();
+    spider->setSprite("spider");
 
-    gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
+    gamemap->map[6][6]->entity.push_back(spider);
 
     sf::Vector2f position(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
 
     while (app.isOpen())
     {
-        int posX = perso.getPosition().x;
-        int posY = perso.getPosition().y;
+        int posX = 7;
+        int posY = 7;
 
         //scrolling(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
 
@@ -93,7 +96,7 @@ int main()
                     if(persoX > 5)
                     {
                         if(!gamemap->map[persoX-1][persoY]->cantWalk){
-                           // perso.move(-64,0);
+                           perso->moveTo(gamemap, perso->parent->pos.x-1, perso->parent->pos.y);
                            persoX--;
                         }
 
@@ -103,7 +106,7 @@ int main()
                 case sf::Keyboard::Right :
                     if(posX <= NB_BLOCS_L*64 +64)
                         if(!gamemap->map[persoX+1][persoY]->cantWalk){
-                           // perso.move(64,0);
+                           perso->moveTo(gamemap, perso->parent->pos.x+1, perso->parent->pos.y);
                            persoX++;
                         }
                     break;
@@ -111,7 +114,7 @@ int main()
                 case sf::Keyboard::Up :
                     if(persoY > 5)
                         if(!gamemap->map[persoX][persoY-1]->cantWalk){
-                            //perso.move(0,-64);
+                            perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y-1);
                             persoY--;
                         }
                     break;
@@ -119,7 +122,7 @@ int main()
                 case sf::Keyboard::Down :
                     if(posY < NB_BLOCS_H*64 -64)
                         if(!gamemap->map[persoX][persoY+1]->cantWalk){
-                            //perso.move(0,64);
+                            perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y+1);
                             persoY++;
                         }
                     break;
@@ -220,8 +223,8 @@ void affiche(sf::RenderWindow &app, Map* gamemap)
 
         }
     }
-    app.draw(perso);
-    app.draw(spider);
+    //app.draw(perso);
+    //app.draw(spider);
 }
 
 void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap)
@@ -288,20 +291,3 @@ void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap)
         }
     }
 }
-void scrolling(int screenX,int screenY){
-        sf::Vector2f position(screenX,screenY);
-
-        if(perso.getPosition().x +10 > screenX)
-            position.x = perso.getPosition().x + 10;
-        else
-            position.x = screenX;
-        if(perso.getPosition().y +10 > screenY)
-            position.y = perso.getPosition().y + 10;
-        else
-            position.y = screenY;
-
-        view.setCenter(position);
-
-}
-
-

@@ -18,7 +18,7 @@ struct Title
     int player;
     int discoverd;
     std::string spriteName;
-    std::vector< Entity > entity;
+    std::vector< Entity* > entity;
 };
 
 #endif // TITLE_H_INCLUDED

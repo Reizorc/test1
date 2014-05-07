@@ -2,9 +2,12 @@
 #define ENTITY_H_INCLUDE
 
 #include "Title.h"
+#include "Map.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 struct Title;
+class Map;
 
 class Entity
 {
@@ -15,10 +18,18 @@ class Entity
         void setPos(sf::Vector2i pos);
         sf::Vector2i getPos();
 
-        void draw(sf::RenderWindow& app);
+        std::string getSprite();
+        void setSprite(std::string sprite);
+
+        Title* setParent(Title* newTitle);
+        void moveTo(Map* gamemap, int x, int y);
+
+        Title* parent;
+
     protected:
         sf::Vector2i Pos;
-        Title* parent;
+
+        std::string spriteName;
     private:
 };
 
