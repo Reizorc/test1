@@ -39,21 +39,24 @@ int main()
     srand (time(NULL));
     sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
 
+    print aff(app);
+
     font.loadFromFile("arial.ttf");
 
-    tex_perso.loadFromFile("res/img/perso.png");
-
-    perso.setTexture(tex_perso);
-    perso.setPosition(64*5,64*4);
+    int id;
 
     persoX = 6;
     persoY = 5;
 
-    print aff(app);
+    aff.registerSprite("perso.png");
+    aff.registerSprite("spider.png");
+    aff.registerSprite("stone.png");
+    aff.registerSprite("grass.png");
 
+    perso.setTexture(aff.getTexture("perso"));
+    perso.setPosition(64*5,64*4);
 
-    int id = aff.registerSprite("spider.png");
-    spider.setTexture(aff.getTexture(id));
+    spider.setTexture(aff.getTexture("spider"));
     spider.setPosition(64*6,64*6);
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
@@ -159,7 +162,7 @@ int main()
         app.clear();
 
 
-        affiche(app, gamemap->getMap(persoX-5, persoY-4, persoX+6, persoY+5));
+        aff.affiche(gamemap->getMap(persoX-5, persoY-4, persoX+6, persoY+5));
 
         app.display();
 

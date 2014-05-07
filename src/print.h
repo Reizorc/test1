@@ -9,7 +9,7 @@ class print
     public:
         print(sf::RenderWindow &vapp);
         void affiche(Map* gamemap);
-        int registerSprite(string name);
+        int registerSprite(string name, int id = 0);
         const sf::Texture& getTexture(int id);
         const sf::Texture& getTexture(string name);
         virtual ~print();

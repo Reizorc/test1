@@ -25,6 +25,8 @@ void print::affiche(Map* gamemap)
     tex_stone.loadFromFile("res/img/stone.png");
     stone.setTexture(tex_stone);
 
+    sf::Sprite sprite;
+
     for(int x = 0; x < gamemap->x; x++)
     {
         for( int y = 0; y < gamemap->y; y++)
@@ -33,25 +35,13 @@ void print::affiche(Map* gamemap)
             if(title->visible || title->discoverd)
             {
                 if(title->discoverd && !title->visible)
-                {
-                    grass.setColor(sf::Color(255, 255, 255, 128));
-                    stone.setColor(sf::Color(255, 255, 255, 128));
-                }
+                    sprite.setColor(sf::Color(255, 255, 255, 128));
                 else
-                {
-                    grass.setColor(sf::Color(255, 255, 255, 255));
-                    stone.setColor(sf::Color(255, 255, 255, 255));
-                }
-                if(title->ID == 0)
-                {
-                    grass.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                    app->draw(grass);
-                }
-                if(title->ID == 1)
-                {
-                    stone.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                    app->draw(stone);
-                }
+                    sprite.setColor(sf::Color(255, 255, 255, 255));
+
+                sprite.setPosition(64*(x+1)-64, 64*(y+1)-64);
+                sprite.setTexture(getTexture(title->spriteName));
+                app->draw(sprite);
             }
 
         }
@@ -60,16 +50,21 @@ void print::affiche(Map* gamemap)
 //    app.draw(spider);
 }
 
-int print::registerSprite(string name)
+int print::registerSprite(string vName, int id = 0)
 {
+    string name = vName.substr(0, vName.find_first_of("."));
     if(NameMap[name] == 0)
     {
-        max_id += 10;
-        TextureMap[max_id];// = new sf::Texture();
-        TextureMap[max_id].loadFromFile("res/img/" + name);
-        NameMap[name] = max_id;
-        std::cout << max_id << std::endl;
-        return max_id;
+
+        if(!id)
+        {
+            max_id += 10;
+            id = max_id;
+        }
+        TextureMap[id];// = new sf::Texture();
+        TextureMap[id].loadFromFile("res/img/" + vName);
+        NameMap[name] = id;
+        return id;
     }
     else
     {

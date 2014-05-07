@@ -24,11 +24,13 @@ Map::Map(int maxH, int maxL)
                 {
                     row[y]->cantWalk = 1;
                     row[y]->opaque = 1;
+                    row[y]->spriteName = "stone";
                 }
                 else
                 {
                     row[y]->cantWalk = 0;
                     row[y]->opaque = 0;
+                    row[y]->spriteName = "grass";
                 }
             }
             map.push_back(row);

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include <iostream>
 
 class Entity;
 
@@ -16,6 +17,7 @@ struct Title
     int opaque;
     int player;
     int discoverd;
+    std::string spriteName;
     std::vector< Entity > entity;
 };
 
