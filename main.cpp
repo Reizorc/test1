@@ -4,6 +4,7 @@
 #include <time.h>
 #include "src/Map.h"
 #include "src/Title.h"
+#include "print.h"
 
 #define NB_BLOCS_L 100
 #define NB_BLOCS_H 100
@@ -41,14 +42,18 @@ int main()
     font.loadFromFile("arial.ttf");
 
     tex_perso.loadFromFile("res/img/perso.png");
+
     perso.setTexture(tex_perso);
     perso.setPosition(64*5,64*4);
 
     persoX = 6;
     persoY = 5;
 
-    tex_spider.loadFromFile("res/img/spider.png");
-    spider.setTexture(tex_spider);
+    print aff(app);
+
+
+    int id = aff.registerSprite("spider.png");
+    spider.setTexture(aff.getTexture(id));
     spider.setPosition(64*6,64*6);
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
@@ -155,8 +160,6 @@ int main()
 
 
         affiche(app, gamemap->getMap(persoX-5, persoY-4, persoX+6, persoY+5));
-
-        //app.setView(view);
 
         app.display();
 
