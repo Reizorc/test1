@@ -7,8 +7,6 @@
 #include "print.h"
 #include "define.h"
 
-sf::View view(sf::Vector2f(NB_BLOCS_X*BLOCS_SIZE/2, NB_BLOCS_Y*BLOCS_SIZE/2), sf::Vector2f(NB_BLOCS_X*BLOCS_SIZE, NB_BLOCS_Y*BLOCS_SIZE));
-
 sf::Font font;
 sf::Sprite grass;
 sf::Sprite stone;
@@ -30,7 +28,7 @@ int main()
 {
 
     srand (time(NULL));
-    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*BLOCS_SIZE, NB_BLOCS_Y*BLOCS_SIZE), "TILE MAP!!)");
+    sf::RenderWindow app(sf::VideoMode((float)NB_BLOCS_X*BLOCS_SIZE, (float)NB_BLOCS_Y*BLOCS_SIZE), "TILE MAP!!)");
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
@@ -58,7 +56,7 @@ int main()
 
     sf::Vector2f position(NB_BLOCS_X*BLOCS_SIZE/2,NB_BLOCS_Y*BLOCS_SIZE/2);
 
-    std::cout << BLOCS_SIZE/64 << std::endl;
+    std::cout << NB_BLOCS_X*BLOCS_SIZE << std::endl;
 
     while (app.isOpen())
     {
