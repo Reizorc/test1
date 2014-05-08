@@ -5,14 +5,9 @@
 #include "src/Map.h"
 #include "src/Title.h"
 #include "print.h"
+#include "define.h"
 
-#define NB_BLOCS_L 100
-#define NB_BLOCS_H 100
-
-#define NB_BLOCS_X 11
-#define NB_BLOCS_Y 9
-
-sf::View view(sf::Vector2f(NB_BLOCS_X*64/2, NB_BLOCS_Y*64/2), sf::Vector2f(NB_BLOCS_X*64, NB_BLOCS_Y*64));
+sf::View view(sf::Vector2f(NB_BLOCS_X*BLOCS_SIZE/2, NB_BLOCS_Y*BLOCS_SIZE/2), sf::Vector2f(NB_BLOCS_X*BLOCS_SIZE, NB_BLOCS_Y*BLOCS_SIZE));
 
 sf::Font font;
 sf::Sprite grass;
@@ -28,8 +23,6 @@ Map* gamemap;
 int persoX;
 int persoY;
 
-void affiche(sf::RenderWindow& app, Map* gamemap);
-void scrolling(int screenX,int screenY);
 sf::Vector2i getPersoTitle(sf::Sprite perso);
 void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap);
 
@@ -37,7 +30,7 @@ int main()
 {
 
     srand (time(NULL));
-    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*64 , NB_BLOCS_Y*64), "TILE MAP!!)");
+    sf::RenderWindow app(sf::VideoMode(NB_BLOCS_X*BLOCS_SIZE, NB_BLOCS_Y*BLOCS_SIZE), "TILE MAP!!)");
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
@@ -47,8 +40,8 @@ int main()
 
     int id;
 
-    persoX = 6;
-    persoY = 5;
+    persoX = DIST_FROM_UP+10;
+    persoY = DIST_FROM_LEFT+10;
 
     aff.registerSprite("perso.png");
     aff.registerSprite("spider.png");
@@ -57,22 +50,20 @@ int main()
 
     perso = new Entity();
     perso->setSprite("perso");
-    perso->setParent(gamemap->map[6][5]);
+    perso->setParent(gamemap->map[persoX][persoY]);
 
     Entity* spider = new Entity();
     spider->setSprite("spider");
+    spider->setParent(gamemap->map[6][6]);
 
-    gamemap->map[6][6]->entity.push_back(spider);
+    sf::Vector2f position(NB_BLOCS_X*BLOCS_SIZE/2,NB_BLOCS_Y*BLOCS_SIZE/2);
 
-    sf::Vector2f position(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
+    std::cout << BLOCS_SIZE/64 << std::endl;
 
     while (app.isOpen())
     {
         int posX = 7;
         int posY = 7;
-
-        //scrolling(NB_BLOCS_X*64/2,NB_BLOCS_Y*64/2);
-
 
         sf::Event event;
         while (app.pollEvent(event))
@@ -104,7 +95,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Right :
-                    if(posX <= NB_BLOCS_L*64 +64)
+                    if(posX <= NB_BLOCS_L*BLOCS_SIZE +BLOCS_SIZE)
                         if(!gamemap->map[persoX+1][persoY]->cantWalk){
                            perso->moveTo(gamemap, perso->parent->pos.x+1, perso->parent->pos.y);
                            persoX++;
@@ -120,7 +111,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Down :
-                    if(posY < NB_BLOCS_H*64 -64)
+                    if(posY < NB_BLOCS_H*BLOCS_SIZE -BLOCS_SIZE)
                         if(!gamemap->map[persoX][persoY+1]->cantWalk){
                             perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y+1);
                             persoY++;
@@ -151,7 +142,7 @@ int main()
         }
     }
 
-        int dist = 3;
+        int dist = 5;
 
         for(int x = 0; x < NB_BLOCS_L; x++)
             Fov(persoX, persoY, 0, x, dist, gamemap);
@@ -165,7 +156,7 @@ int main()
         app.clear();
 
 
-        aff.affiche(gamemap->getMap(persoX-5, persoY-4, persoX+6, persoY+5));
+        aff.affiche(gamemap->getMap(persoX-DIST_FROM_LEFT-1, persoY-DIST_FROM_UP-1, persoX+DIST_FROM_LEFT, persoY+DIST_FROM_UP));
 
         app.display();
 
@@ -177,54 +168,7 @@ int main()
 
 sf::Vector2i getPersoTitle(sf::Sprite sprite)
 {
-    return sf::Vector2i(sprite.getPosition().x/64, sprite.getPosition().y/64);
-}
-
-void affiche(sf::RenderWindow &app, Map* gamemap)
-{
-
-    sf::Texture tex_grass;
-    tex_grass.loadFromFile("res/img/grass.png");
-    grass.setTexture(tex_grass);
-
-
-    sf::Texture tex_stone;
-    tex_stone.loadFromFile("res/img/stone.png");
-    stone.setTexture(tex_stone);
-
-    for(int x = 0; x < gamemap->x; x++)
-    {
-        for( int y = 0; y < gamemap->y; y++)
-        {
-            Title* title = gamemap->map[x][y];
-            if(title->visible || title->discoverd)
-            {
-                if(title->discoverd && !title->visible)
-                {
-                    grass.setColor(sf::Color(255, 255, 255, 128));
-                    stone.setColor(sf::Color(255, 255, 255, 128));
-                }
-                else
-                {
-                    grass.setColor(sf::Color(255, 255, 255, 255));
-                    stone.setColor(sf::Color(255, 255, 255, 255));
-                }
-                if(title->ID == 0)
-                {
-                    grass.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                    app.draw(grass);
-                }
-                if(title->ID == 1)
-                {
-                    stone.setPosition(64*(x+1)-64, 64*(y+1)-64);
-                    app.draw(stone);
-                }
-            }
-
-        }
-    }
-    //app.draw(perso);
-    //app.draw(spider);
+    return sf::Vector2i(sprite.getPosition().x/BLOCS_SIZE, sprite.getPosition().y/BLOCS_SIZE);
 }
 
 void Fov(int x1, int y1, int const x2, int const y2, int max, Map* gamemap)

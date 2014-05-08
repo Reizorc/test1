@@ -33,19 +33,15 @@ void Entity::setSprite(std::string sprite)
 
 Title* Entity::setParent(Title* newTitle)
 {
+    Title* oldTitle = parent;
     if(parent)
     {
-        Title* oldTitle = parent;
         std::vector<Entity*>* entity = &oldTitle->entity;
         entity->erase(std::remove(entity->begin(),entity->end(), this), entity->end());
+    }
         newTitle->entity.push_back(this);
         parent = newTitle;
         return oldTitle;
-    }
-
-    newTitle->entity.push_back(this);
-    parent = newTitle;
-    return parent;
 }
 
 void Entity::moveTo(Map* gamemap, int x, int y)

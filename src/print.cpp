@@ -1,9 +1,11 @@
 #include "print.h"
+#include "define.h"
 
 print::print(sf::RenderWindow &vapp)
 {
     app = &vapp;
     max_id = 0;
+    sprite.setScale((float)BLOCS_SIZE/64, (float)BLOCS_SIZE/64);
 }
 
 print::~print()
@@ -13,33 +15,19 @@ print::~print()
 
 void print::affiche(Map* gamemap)
 {
-    sf::Sprite grass;
-    sf::Sprite stone;
-
-    sf::Texture tex_grass;
-    tex_grass.loadFromFile("res/img/grass.png");
-    grass.setTexture(tex_grass);
-
-
-    sf::Texture tex_stone;
-    tex_stone.loadFromFile("res/img/stone.png");
-    stone.setTexture(tex_stone);
-
-    sf::Sprite sprite;
-
     for(int x = 0; x < gamemap->x; x++)
     {
         for( int y = 0; y < gamemap->y; y++)
         {
             Title* title = gamemap->map[x][y];
-            if(title->visible || title->discoverd)
+            if((title->visible || title->discoverd))
             {
-                if(title->discoverd && !title->visible)
+                if(title->discoverd && !title->visible && !title->cantWalk)
                     sprite.setColor(sf::Color(255, 255, 255, 128));
                 else
                     sprite.setColor(sf::Color(255, 255, 255, 255));
 
-                sprite.setPosition(64*(x+1)-64, 64*(y+1)-64);
+                sprite.setPosition(BLOCS_SIZE*(x+1)-BLOCS_SIZE, BLOCS_SIZE*(y+1)-BLOCS_SIZE);
                 sprite.setTexture(getTexture(title->spriteName));
                 app->draw(sprite);
                 for(auto& Entity : title->entity)
@@ -51,8 +39,6 @@ void print::affiche(Map* gamemap)
 
         }
     }
-//    app.draw(perso);
-//    app.draw(spider);
 }
 
 int print::registerSprite(string vName, int id = 0)

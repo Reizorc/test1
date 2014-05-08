@@ -18,6 +18,7 @@ class print
         std::map<int, const sf::Texture> TextureMap;
         std::map<string, int> NameMap;
         int max_id;
+        sf::Sprite sprite;
     private:
 };
 
