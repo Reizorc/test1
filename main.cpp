@@ -28,7 +28,7 @@ int main()
 {
 
     srand (time(NULL));
-    sf::RenderWindow app(sf::VideoMode((float)NB_BLOCS_X*BLOCS_SIZE, (float)NB_BLOCS_Y*BLOCS_SIZE), "TILE MAP!!)");
+    sf::RenderWindow app(sf::VideoMode((float)((NB_BLOCS_X-1)*BLOCS_SIZE), (float)((NB_BLOCS_Y-1)*BLOCS_SIZE)), "TILE MAP!!)");
 
     gamemap = new Map(NB_BLOCS_H, NB_BLOCS_L);
 
@@ -93,7 +93,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Right :
-                    if(posX <= NB_BLOCS_L*BLOCS_SIZE +BLOCS_SIZE)
+                    if(persoX < NB_BLOCS_L-5)
                         if(!gamemap->map[persoX+1][persoY]->cantWalk){
                            perso->moveTo(gamemap, perso->parent->pos.x+1, perso->parent->pos.y);
                            persoX++;
@@ -109,7 +109,7 @@ int main()
                     break;
 
                 case sf::Keyboard::Down :
-                    if(posY < NB_BLOCS_H*BLOCS_SIZE -BLOCS_SIZE)
+                    if(persoY < NB_BLOCS_L-5)
                         if(!gamemap->map[persoX][persoY+1]->cantWalk){
                             perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y+1);
                             persoY++;
@@ -154,7 +154,7 @@ int main()
         app.clear();
 
 
-        aff.affiche(gamemap->getMap(persoX-DIST_FROM_LEFT-1, persoY-DIST_FROM_UP-1, persoX+DIST_FROM_LEFT, persoY+DIST_FROM_UP));
+        aff.affiche(gamemap->getMap(std::max(persoX-DIST_FROM_LEFT-1, 0), std::max(persoY-DIST_FROM_UP-1, 0),  std::min(persoX+DIST_FROM_LEFT, NB_BLOCS_L), std::min(persoY+DIST_FROM_UP, NB_BLOCS_H)));
 
         app.display();
 
