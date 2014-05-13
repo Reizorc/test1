@@ -6,6 +6,7 @@
 #include "src/Title.h"
 #include "print.h"
 #include "define.h"
+#include "horloge.h"
 
 sf::Font font;
 sf::Sprite grass;
@@ -17,6 +18,8 @@ sf::Texture tex_spider;
 sf::Texture tex_perso;
 
 Map* gamemap;
+
+Horloge horloge;
 
 int persoX;
 int persoY;
@@ -49,10 +52,14 @@ int main()
     perso = new Entity();
     perso->setSprite("perso");
     perso->setParent(gamemap->map[persoX][persoY]);
+    perso->nextTick = 100;
+    horloge.add(perso);
 
     Entity* spider = new Entity();
     spider->setSprite("spider");
     spider->setParent(gamemap->map[6][6]);
+    spider->nextTick = 1000;
+    horloge.add(spider);
 
     sf::Vector2f position(NB_BLOCS_X*BLOCS_SIZE/2,NB_BLOCS_Y*BLOCS_SIZE/2);
 
@@ -86,6 +93,8 @@ int main()
                     {
                         if(!gamemap->map[persoX-1][persoY]->cantWalk){
                            perso->moveTo(gamemap, perso->parent->pos.x-1, perso->parent->pos.y);
+                           perso->nextTick = 100;
+                           horloge.tick();
                            persoX--;
                         }
 
@@ -104,6 +113,7 @@ int main()
                     if(persoY > 5)
                         if(!gamemap->map[persoX][persoY-1]->cantWalk){
                             perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y-1);
+                            spider->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y-1);
                             persoY--;
                         }
                     break;
@@ -112,6 +122,7 @@ int main()
                     if(persoY < NB_BLOCS_L-5)
                         if(!gamemap->map[persoX][persoY+1]->cantWalk){
                             perso->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y+1);
+                            spider->moveTo(gamemap, perso->parent->pos.x, perso->parent->pos.y+1);
                             persoY++;
                         }
                     break;
@@ -140,7 +151,7 @@ int main()
         }
     }
 
-        int dist = 5;
+        int dist = 10;
 
         for(int x = 0; x < NB_BLOCS_L; x++)
             Fov(persoX, persoY, 0, x, dist, gamemap);

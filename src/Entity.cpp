@@ -4,6 +4,8 @@
 Entity::Entity()
 {
     parent = nullptr;
+
+    nextTick = 0;
 }
 
 Entity::~Entity()
@@ -47,4 +49,17 @@ Title* Entity::setParent(Title* newTitle)
 void Entity::moveTo(Map* gamemap, int x, int y)
 {
     setParent(gamemap->map[x][y]);
+}
+
+void Entity::tick()
+{
+    if(!(spriteName == "perso"))
+    {
+        nextTick = 1000;
+        setSprite("stone");
+    }
+    else
+    {
+        nextTick = 100;
+    }
 }

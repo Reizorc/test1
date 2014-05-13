@@ -15,6 +15,8 @@ class Entity
         Entity();
         virtual ~Entity();
 
+        void tick();
+
         void setPos(sf::Vector2i pos);
         sf::Vector2i getPos();
 
@@ -25,6 +27,8 @@ class Entity
         void moveTo(Map* gamemap, int x, int y);
 
         Title* parent;
+
+        int nextTick;
 
     protected:
         sf::Vector2i Pos;
