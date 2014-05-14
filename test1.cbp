@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add directory="src" />
 				</Compiler>
@@ -74,6 +75,16 @@
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/Title.cpp" />
 		<Unit filename="src/Title.h" />
+		<Unit filename="src/define.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="src/gametitle.cpp" />
+		<Unit filename="src/gametitle.h" />
+		<Unit filename="src/horloge.cpp" />
+		<Unit filename="src/horloge.h" />
+		<Unit filename="src/outils.cpp" />
+		<Unit filename="src/print.cpp" />
+		<Unit filename="src/print.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

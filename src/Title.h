@@ -6,6 +6,15 @@
 #include <iostream>
 
 class Entity;
+struct Title;
+
+struct Voisin
+{
+    Title* left = nullptr;
+    Title* right = nullptr;
+    Title* top = nullptr;
+    Title* bottom = nullptr;
+};
 
 struct Title
 {
@@ -17,8 +26,11 @@ struct Title
     int opaque;
     int player;
     int discoverd;
+    Voisin voisin;
     std::string spriteName;
     std::vector< Entity* > entity;
 };
+
+
 
 #endif // TITLE_H_INCLUDED

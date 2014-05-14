@@ -20,6 +20,11 @@ Map::Map(int maxH, int maxL)
                 row[y]->pos = sf::Vector2i(x, y);
                 row[y]->visible = 0;
                 row[y]->discoverd = 0;
+                if(row[y-1])
+                    row[y]->voisin.left = row[y-1];
+                if(row[y+1])
+                    row[y]->voisin.right = row[y+1];
+
                 if(row[y]->ID == 1)
                 {
                     row[y]->cantWalk = 1;
@@ -36,6 +41,7 @@ Map::Map(int maxH, int maxL)
             map.push_back(row);
         }
     }
+
 }
 
 Map* Map::getMap(int x1, int y1, int x2, int y2)
