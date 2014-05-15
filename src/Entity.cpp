@@ -55,11 +55,11 @@ void Entity::tick()
 {
     if(!(spriteName == "perso"))
     {
-        nextTick = 1000;
-        setSprite("stone");
+        nextTick = 3000;
+        setParent(parent->voisin.left);
     }
     else
     {
-        nextTick = 100;
+        nextTick = 1000;
     }
 }

@@ -20,10 +20,6 @@ Map::Map(int maxH, int maxL)
                 row[y]->pos = sf::Vector2i(x, y);
                 row[y]->visible = 0;
                 row[y]->discoverd = 0;
-                if(row[y-1])
-                    row[y]->voisin.left = row[y-1];
-                if(row[y+1])
-                    row[y]->voisin.right = row[y+1];
 
                 if(row[y]->ID == 1)
                 {
@@ -39,6 +35,17 @@ Map::Map(int maxH, int maxL)
                 }
             }
             map.push_back(row);
+        }
+
+        for(int x = 1; x < maxH-1; x++)
+        {
+            for(int y = 1; y < maxL-1; y++)
+            {
+                map[x][y]->voisin.top = map[x][y-1];
+                map[x][y]->voisin.bottom = map[x][y+1];
+                map[x][y]->voisin.left = map[x-1][y];
+                map[x][y]->voisin.right = map[x+1][y];
+            }
         }
     }
 
